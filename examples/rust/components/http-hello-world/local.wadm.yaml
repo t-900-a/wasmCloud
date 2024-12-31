@@ -16,7 +16,15 @@ spec:
         - type: spreadscaler
           properties:
             instances: 1
-
+        - type: link
+          properties:
+            target:
+              name: sqldb-postgres
+              config:
+                - name: default-postgres
+            namespace: wasmcloud
+            package: postgres
+            interfaces: [query]
     # Add a capability provider that enables HTTP access
     - name: httpserver
       type: capability
@@ -47,3 +55,17 @@ spec:
                 - name: default-http
                   properties:
                     address: 0.0.0.0:8000
+    # Add a capability provider that interacts with the filesystem
+    - name: sqldb-postgres
+      type: capability
+      properties:
+        image: ghcr.io/wasmcloud/sqldb-postgres:0.7.2
+        config:
+          - name: default-postgres
+          ## To configure OTEL integration for this provider specifically, uncomment the lines below
+          # - name: otel
+          #   properties:
+          #     otel_exporter_otlp_endpoint: "http://all-in-one:4318"
+          #     otel_exporter_otlp_traces_endpoint: "http://traces-backend/v1/traces"
+          #     otel_exporter_otlp_metrics_endpoint: "http://metrics-backend/v1/metrics"
+          #     otel_exporter_otlp_logs_endpoint: "http://logs-backend/v1/logs"
