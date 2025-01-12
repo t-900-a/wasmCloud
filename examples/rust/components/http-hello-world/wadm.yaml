@@ -29,9 +29,9 @@ spec:
               name: sqldb-postgres
               config:
                 - name: default-postgres
-            namespace: wasmcloud
-            package: postgres
-            interfaces: [query]      
+              namespace: wasmcloud
+              package: postgres
+              interfaces: [query]      
     # Add a capability provider that enables HTTP access
     - name: httpserver
       type: capability
